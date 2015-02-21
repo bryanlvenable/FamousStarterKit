@@ -11,8 +11,9 @@ define(function(require, exports, module) {
 
     // import the SlideshowView class
     var SlideshowView = require('views/SlideshowView');
-
     var ImageSurface = require('famous/surfaces/ImageSurface');
+    var ContainerSurface = require('famous/surfaces/ContainerSurface');
+
 
     // Constructor function for our AppView class
     function AppView() {
@@ -80,7 +81,14 @@ define(function(require, exports, module) {
             transform: Transform.translate(0, this.options.slidePosition, 0)
         });
 
-        this.add(slideshowModifier).add(slideshowView);
+        var slideshowContainer = new ContainerSurface({
+            properties: {
+                overflow: 'hidden'
+            }
+        });
+
+        this.add(slideshowModifier).add(slideshowContainer);
+        slideshowContainer.add(slideshowView);
     }
 
     module.exports = AppView;

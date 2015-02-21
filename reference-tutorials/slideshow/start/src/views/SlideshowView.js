@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var Lightbox = require('famous/views/Lightbox');
     var SlideView = require('views/SlideView');
     var Easing = require('famous/transitions/Easing');
+    
 
     // Constructor function for our SlideshowView class
     function SlideshowView() {
@@ -57,16 +58,17 @@ define(function(require, exports, module) {
         size: [450, 500],
         data: undefined,
         lightboxOpts: {
-            inTransform: Transform.rotateY(0.5),
             inOpacity: 1,
+            outOpacity: 0,
             inOrigin: [0, 0],
-            showOrigin: [0, 0],
-            outTransform: Transform.rotateY(-Math.PI/2),
-            outOpacity: 1,
             outOrigin: [0, 0],
-            inTransition: { duration: 500, curve: 'linear' },
-            outTransition: { duration: 700, curve: 'linear' },
-            overlap: true
+            showOrigin: [0, 0],
+            // Transform.thenMove() first applies a transform then a
+            // translation based on [x, y, z]
+            inTransform: Transform.thenMove(Transform.rotateX(0.9), [0, -300, 0]),
+            outTransform: Transform.thenMove(Transform.rotateZ(0.7), [0, window.innerHeight, -1000]),
+            inTransition: { duration: 650, curve: 'easeOut' },
+            outTransition: { duration: 500, curve: Easing.inCubic }
         }
     };
 

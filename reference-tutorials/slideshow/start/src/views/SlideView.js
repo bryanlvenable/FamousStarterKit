@@ -16,12 +16,29 @@ define(function(require, exports, module) {
         View.apply(this, arguments);
 
         this.rootModifier = new StateModifier({
-            size: [400, 450]
+            size: this.options.size
         });
 
         // saving a reference to the new node
         this.mainNode = this.add(this.rootModifier);
+        
+        // Call helper function for background
+        _createBackground.call(this);
 
+    }
+
+    // Establishes prototype chain for SlideView class to inherit from View
+    SlideView.prototype = Object.create(View.prototype);
+    SlideView.prototype.constructor = SlideView;
+
+    // Default options for SlideView class
+    SlideView.DEFAULT_OPTIONS = {
+        size: [400, 450]
+    };
+
+    // Define your helper functions and prototype methods here
+    // Background helper function
+    function _createBackground() {
         var background = new Surface({
             // undefined size will inherit size from parent modifier
             properties: {
@@ -32,15 +49,6 @@ define(function(require, exports, module) {
 
         this.mainNode.add(background);
     }
-
-    // Establishes prototype chain for SlideView class to inherit from View
-    SlideView.prototype = Object.create(View.prototype);
-    SlideView.prototype.constructor = SlideView;
-
-    // Default options for SlideView class
-    SlideView.DEFAULT_OPTIONS = {};
-
-    // Define your helper functions and prototype methods here
 
     module.exports = SlideView;
 });

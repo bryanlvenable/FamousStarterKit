@@ -20,7 +20,8 @@ define(function(require, exports, module) {
         View.apply(this, arguments);
 
         this.rootModifier = new StateModifier({
-            size: this.options.size
+            align: [0.5, 0.0],
+            origin: [0.5, 0.0]
         });
 
         // saving a reference to the new node

@@ -11,9 +11,11 @@ define(function(require, exports, module) {
 
     var mainContext = Engine.createContext();
 
+    mainContext.setPerspective(1000);
+    
     // Import SlideData
     var SlideData = require('data/SlideData');
-
+    
     // Simple GET request to the Picasa api with callback
     Utility.loadURL(SlideData.getUrl(), initApp);
 

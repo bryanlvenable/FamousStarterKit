@@ -45,6 +45,12 @@ define(function(require, exports, module) {
         this.lightbox.show(slide);
     };
 
+    SlideshowView.prototype.showNextSlide = function() {
+        this.currentIndex++;
+        if (this.currentIndex === this.slides.length) this.currentIndex = 0;
+        this.showCurrentSlide();
+    };
+
     // Default options for SlideshowView class
     SlideshowView.DEFAULT_OPTIONS = {
         size: [450, 500],
@@ -71,6 +77,9 @@ define(function(require, exports, module) {
             });
 
             this.slides.push(slide);
+
+            // Add clidk event listener
+            slide.on('click', this.showNextSlide.bind(this));
         }
         // Call helper function to create slides
         this.showCurrentSlide();

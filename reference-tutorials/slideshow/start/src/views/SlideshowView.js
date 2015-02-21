@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     // Add Lightbox widget
     var Lightbox = require('famous/views/Lightbox');
     var SlideView = require('views/SlideView');
+    var Easing = require('famous/transitions/Easing');
 
     // Constructor function for our SlideshowView class
     function SlideshowView() {
@@ -55,7 +56,12 @@ define(function(require, exports, module) {
     SlideshowView.DEFAULT_OPTIONS = {
         size: [450, 500],
         data: undefined,
-        lightboxOpts: {}
+        lightboxOpts: {
+            inTransform: Transform.translate(300, 0, 0),
+            outTransform: Transform.translate(-500, 0, 0),
+            inTransition: { duration: 500, curve: Easing.outBack },
+            outTransition: { duration: 350, curve: Easing.inQuad }
+        }
     };
 
     // Define your helper functions and prototype methods here

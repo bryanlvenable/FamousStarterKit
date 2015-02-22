@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     var Lightbox = require('famous/views/Lightbox');
     var SlideView = require('views/SlideView');
     var Easing = require('famous/transitions/Easing');
-    
+
 
     // Constructor function for our SlideshowView class
     function SlideshowView() {
@@ -43,11 +43,20 @@ define(function(require, exports, module) {
     
     // Method to show current slide
     SlideshowView.prototype.showCurrentSlide = function() {
+        this.ready = false;
+
         var slide = this.slides[this.currentIndex];
-        this.lightbox.show(slide);
+        this.lightbox.show(slide, function() {
+            this.ready = true;
+            slide.fadeIn();
+        }.bind(this));
     };
 
     SlideshowView.prototype.showNextSlide = function() {
+        if (!this.ready) {
+            return;
+        }
+        
         this.currentIndex++;
         if (this.currentIndex === this.slides.length) this.currentIndex = 0;
         this.showCurrentSlide();
@@ -63,12 +72,11 @@ define(function(require, exports, module) {
             inOrigin: [0, 0],
             outOrigin: [0, 0],
             showOrigin: [0, 0],
-            // Transform.thenMove() first applies a transform then a
-            // translation based on [x, y, z]
-            inTransform: Transform.thenMove(Transform.rotateX(0.9), [0, -300, 0]),
+            inTransform: Transform.thenMove(Transform.rotateX(0.9), [0, -300, -300]),
             outTransform: Transform.thenMove(Transform.rotateZ(0.7), [0, window.innerHeight, -1000]),
             inTransition: { duration: 650, curve: 'easeOut' },
             outTransition: { duration: 500, curve: Easing.inCubic }
+
         }
     };
 

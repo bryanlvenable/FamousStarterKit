@@ -1,4 +1,4 @@
-/*** EmptyView.js ***/
+/*** PageView.js ***/
 
 define(function(require, exports, module) {
     var View          = require('famous/core/View');
@@ -6,14 +6,14 @@ define(function(require, exports, module) {
     var Transform     = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
 
-    function EmptyView() {
+    function PageView() {
         View.apply(this, arguments);
     }
 
-    EmptyView.prototype = Object.create(View.prototype);
-    EmptyView.prototype.constructor = EmptyView;
+    PageView.prototype = Object.create(View.prototype);
+    PageView.prototype.constructor = PageView;
 
-    EmptyView.DEFAULT_OPTIONS = {};
+    PageView.DEFAULT_OPTIONS = {};
 
-    module.exports = EmptyView;
+    module.exports = PageView;
 });

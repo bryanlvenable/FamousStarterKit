@@ -7,12 +7,16 @@ define(function(require, exports, module) {
     var StateModifier = require('famous/modifiers/StateModifier');
     var HeaderFooter  = require('famous/views/HeaderFooterLayout');
     var ImageSurface  = require('famous/surfaces/ImageSurface');
+    var FastClick     = require('famous/inputs/FastClick');
 
     function PageView() {
         View.apply(this, arguments);
 
         _createLayout.call(this);
         _createHeader.call(this);
+        _createBody.call(this);
+
+        _setListeners.call(this);
     }
 
     PageView.prototype = Object.create(View.prototype);
@@ -75,10 +79,26 @@ define(function(require, exports, module) {
             align: [1, 0.5]
         });
 
+
         this.layout.header.add(backgroundModifier).add(backgroundSurface);
         this.layout.header.add(hamburgerModifier).add(this.hamburgerSurface);
         this.layout.header.add(searchModifier).add(searchSurface);
         this.layout.header.add(iconModifier).add(iconSurface);
+    }
+
+    function _createBody() {
+        this.bodySurface = new ImageSurface({
+            size: [undefined, true],
+            content: 'img/body.png'
+        });
+
+        this.layout.content.add(this.bodySurface);
+    }
+
+    function _setListeners() {
+        this.hamburgerSurface.on('click', function() {
+            this._eventOutput.emit('menuToggle');
+        }.bind(this));
     }
 
     module.exports = PageView;

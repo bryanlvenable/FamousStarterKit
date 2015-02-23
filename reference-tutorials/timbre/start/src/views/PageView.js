@@ -5,12 +5,13 @@ define(function(require, exports, module) {
     var Surface       = require('famous/core/Surface');
     var Transform     = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
-    var HeaderFooter = require('famous/views/HeaderFooterLayout');
+    var HeaderFooter  = require('famous/views/HeaderFooterLayout');
 
     function PageView() {
         View.apply(this, arguments);
 
         _createLayout.call(this);
+        _createHeader.call(this);
     }
 
     PageView.prototype = Object.create(View.prototype);
@@ -30,6 +31,20 @@ define(function(require, exports, module) {
         });
 
         this.add(layoutModifier).add(this.layout);
+    }
+
+    function _createHeader() {
+        var backgroundSurface = new Surface({
+            properties: {
+                backgroundColor: 'black'
+            }
+        });
+
+        var backgroundModifier = new StateModifier({
+            transform: Transform.behind
+        });
+
+        this.layout.header.add(backgroundModifier).add(backgroundSurface);
     }
 
     module.exports = PageView;

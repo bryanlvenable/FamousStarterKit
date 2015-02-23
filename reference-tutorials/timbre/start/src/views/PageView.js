@@ -6,6 +6,7 @@ define(function(require, exports, module) {
     var Transform     = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
     var HeaderFooter  = require('famous/views/HeaderFooterLayout');
+    var ImageSurface  = require('famous/surfaces/ImageSurface');
 
     function PageView() {
         View.apply(this, arguments);
@@ -40,11 +41,44 @@ define(function(require, exports, module) {
             }
         });
 
+        this.hamburgerSurface = new ImageSurface({
+            size: [44, 44],
+            content: 'img/hamburger.png'
+        });
+
+        var searchSurface = new ImageSurface({
+            size: [232, 44],
+            content: 'img/search.png'
+        });
+
+        var iconSurface = new ImageSurface({
+            size: [44, 44],
+            content: 'img/icon.png'
+        });
+
         var backgroundModifier = new StateModifier({
             transform: Transform.behind
         });
 
+        var hamburgerModifier = new StateModifier({
+            origin: [0, 0.5],
+            align: [0, 0.5]
+        });
+
+        var searchModifier = new StateModifier({
+            origin: [0.5, 0.5],
+            align: [0.5, 0.5]
+        });
+
+        var iconModifier = new StateModifier({
+            origin: [1, 0.5],
+            align: [1, 0.5]
+        });
+
         this.layout.header.add(backgroundModifier).add(backgroundSurface);
+        this.layout.header.add(hamburgerModifier).add(this.hamburgerSurface);
+        this.layout.header.add(searchModifier).add(searchSurface);
+        this.layout.header.add(iconModifier).add(iconSurface);
     }
 
     module.exports = PageView;

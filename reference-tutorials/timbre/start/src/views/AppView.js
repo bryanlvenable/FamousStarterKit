@@ -41,7 +41,7 @@ define(function(require, exports, module) {
         } else {
             this.slideRight();
         }
-        this.menuToggle = !this.menuToggle;
+        this.menuView.animateStrips();
     };
 
     AppView.prototype.slideLeft = function() {
@@ -103,6 +103,9 @@ define(function(require, exports, module) {
 
         sync.on('update', function(data) {
             var currentPosition = this.pageViewPos.get();
+            if(currentPosition === 0 && data.velocity > 0) {
+                this.menuView.animateStrips();
+            }
 
             this.pageViewPos.set(Math.max(0, currentPosition + data.delta));
         }.bind(this));

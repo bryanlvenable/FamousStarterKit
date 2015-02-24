@@ -11,7 +11,8 @@ define(function(require, exports, module) {
 
     function PageView() {
         View.apply(this, arguments);
-
+        
+        _createBacking.call(this);
         _createLayout.call(this);
         _createHeader.call(this);
         _createBody.call(this);
@@ -101,6 +102,17 @@ define(function(require, exports, module) {
         }.bind(this));
 
         this.bodySurface.pipe(this._eventOutput);
+    }
+
+    function _createBacking() {
+        var backing = new Surface({
+            properties: {
+                backgroundColor: 'black',
+                boxShadow: '0 0 20px rgba(0,0,0,0.5)'
+            }
+        });
+
+        this.add(backing);
     }
 
     module.exports = PageView;

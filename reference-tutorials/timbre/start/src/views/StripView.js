@@ -6,10 +6,13 @@ define(function(require, exports, module) {
     var Transform     = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
 
+    var ImageSurface = require('famous/surfaces/ImageSurface');
+
     function StripView() {
         View.apply(this, arguments);
 
         _createBackground.call(this);
+        _createIcon.call(this);
     }
 
     StripView.prototype = Object.create(View.prototype);
@@ -18,7 +21,9 @@ define(function(require, exports, module) {
     StripView.DEFAULT_OPTIONS = {
         width: 320,
         height: 55,
-        angle: -0.2
+        angle: -0.2,
+        iconSize: 32,
+        iconUrl: 'img/strip-icons/famous.png'
     };
 
     function _createBackground() {
@@ -42,6 +47,23 @@ define(function(require, exports, module) {
 
         // We are first skewing our surface then rotating it
         this.add(rotateModifier).add(skewModifier).add(backgroundSurface);
+    }
+
+    function _createIcon() {
+        var iconSurface = new ImageSurface({
+            size: [this.options.iconSize, this.options.iconSize],
+            content: this.options.iconUrl,
+            properties: {
+                pointerEvents: 'none'
+            }
+        });
+
+        var iconModifer = new StateModifier({
+            // places the icon in the proper location
+            transform: Transform.translate(24, 2, 0)
+        });
+
+        this.add(iconModifer).add(iconSurface);
     }
 
     module.exports = StripView;
